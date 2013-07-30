@@ -4,10 +4,10 @@
     <script src="vendors/jquery.js"></script>
     <script src="vendors/lodash.underscore.js"></script>
     <script src="vendors/backbone.js"></script>
+
   </head>
   <body>
     <div id="main"></div>
-
 
     <script id="form-template" type="text/template">    
         <input id="dom-element" type="text" value= <%= this.model.attributes.modelProp %> >
@@ -21,8 +21,6 @@
           }
       });
 
-
-
       // View Class   
       var FooView = Backbone.View.extend({
           el: '#main',
@@ -32,38 +30,31 @@
               this.listenTo(this.model, 'change', this.render);
           },
           render: function () {
-              this.$el.html(this.template(this.model.attributes));
+              this.$el.html(this.template());
+              
               return this;
           },
           print: function () {
               console.log(this.model.toJSON());
           },
-          binding: {
-              "#dom-element": "modelProp"
+          bindings: {
+              '#dom-element': 'modelProp'
           }
       });
 
-
-
       // Model Instance
       var myFoo = new Foo();
-
-
 
       // View Instance
       var myView = new FooView({
           model: myFoo
       });
 
-
-
       // Render View
       myView.render();
 
-
-
       // Change Model Property
-      myFoo.set("modelProp", "yellow");
+      myFoo.set('modelProp', 'yellow');
     </script>
   </body>
 </html>

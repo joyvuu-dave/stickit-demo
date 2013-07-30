@@ -9,8 +9,7 @@
   <body>
     <div id="main"></div>
 
-
-    <script id="form-template" type="text/template">    
+    <script id="form-template" type="text/template">
         <input id="dom-element" type="text">
     </script>
     
@@ -22,13 +21,12 @@
           }
       });
 
-
-
       // View Class   
       var FooView = Backbone.View.extend({
           el: '#main',
           template: _.template($('#form-template').html()),
           initialize: function() {
+              this.listenTo(this.model, 'change', this.print);
               this.render();
           },
           render: function () {
@@ -39,29 +37,21 @@
           print: function () {
               console.log(this.model.toJSON());
           },
-          binding: {
+          bindings: {
               '#dom-element': 'modelProp'
           }
       });
 
-
-
       // Model Instance
       var myFoo = new Foo();
-
-
 
       // View Instance
       var myView = new FooView({
           model: myFoo
       });
 
-
-
       // Render View
       myView.render();
-
-
 
       // Change Model Property
       myFoo.set('modelProp', 'yellow');
