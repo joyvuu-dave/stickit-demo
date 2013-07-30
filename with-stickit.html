@@ -1,16 +1,17 @@
 <!doctype html>
 <html>
   <head>
-    <script src="../vendors/jquery.js"></script>
-    <script src="../vendors/lodash.underscore.js"></script>
-    <script src="../vendors/backbone.js"></script>
+    <script src="vendors/jquery.js"></script>
+    <script src="vendors/lodash.underscore.js"></script>
+    <script src="vendors/backbone.js"></script>
+    <script src="vendors/backbone.stickit.js"></script>
   </head>
   <body>
     <div id="main"></div>
 
 
     <script id="form-template" type="text/template">    
-        <input id="dom-element" type="text" value= <%= this.model.attributes.modelProp %> >
+        <input id="dom-element" type="text">
     </script>
     
     <script>
@@ -28,18 +29,18 @@
           el: '#main',
           template: _.template($('#form-template').html()),
           initialize: function() {
-              this.listenTo(this.model, 'change', this.print);
-              this.listenTo(this.model, 'change', this.render);
+              this.render();
           },
           render: function () {
-              this.$el.html(this.template(this.model.attributes));
+              this.$el.html(this.template());
+              this.stickit();
               return this;
           },
           print: function () {
               console.log(this.model.toJSON());
           },
           binding: {
-              "#dom-element": "modelProp"
+              '#dom-element': 'modelProp'
           }
       });
 
@@ -63,7 +64,7 @@
 
 
       // Change Model Property
-      myFoo.set("modelProp", "yellow");
+      myFoo.set('modelProp', 'yellow');
     </script>
   </body>
 </html>
